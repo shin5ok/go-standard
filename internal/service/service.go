@@ -8,11 +8,6 @@ import (
 	ulid "github.com/oklog/ulid/v2"
 )
 
-type params struct {
-	Name string `json:"name"`
-	Id   string `json:"id"`
-}
-
 func New(name string) params {
 	p := params{}
 	p.Name = name
