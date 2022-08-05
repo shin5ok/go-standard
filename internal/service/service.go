@@ -1,9 +1,11 @@
 package service
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 
 	ulid "github.com/oklog/ulid/v2"
 )
@@ -14,11 +16,11 @@ func New(name string) params {
 	return p
 }
 
-func (p params) RunCore(ctx context.Context) []byte {
+func (p params) RunCore(ctx context.Context) io.Reader {
 	p.Id = ulid.Make().String()
 	jsonData, err := json.Marshal(p)
 	if err != nil {
 		fmt.Errorf("Json Encode failure: %w", err)
 	}
-	return jsonData
+	return bytes.NewReader(jsonData)
 }
