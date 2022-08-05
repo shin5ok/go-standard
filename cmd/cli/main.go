@@ -17,6 +17,9 @@ func main() {
 	r := p.RunCore(ctx)
 	defer cancel()
 
-	fmt.Println(string(r))
+	result := make([]byte, 128)
+	r.Read(result)
+
+	fmt.Println(string(result))
 
 }
