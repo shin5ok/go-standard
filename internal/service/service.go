@@ -16,11 +16,12 @@ func New(name string) params {
 	return p
 }
 
-func (p params) RunCore(ctx context.Context) io.Reader {
+func (p params) RunCore(ctx context.Context) (io.Reader, error) {
 	p.Id = ulid.Make().String()
 	jsonData, err := json.Marshal(p)
 	if err != nil {
-		fmt.Errorf("Json Encode failure: %w", err)
+		fmt.Printf("Json Encode failure: %v", err)
+		return bytes.NewBuffer([]byte{}), nil
 	}
-	return bytes.NewReader(jsonData)
+	return bytes.NewReader(jsonData), nil
 }
