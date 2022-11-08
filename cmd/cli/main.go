@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"os"
 
 	"github.com/shin5ok/go-standard/internal/service"
 )
@@ -14,7 +15,12 @@ func main() {
 	p := service.New(name)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	r := p.RunCore(ctx)
+
+	r, err := p.RunCore(ctx)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	defer cancel()
 
 	result := make([]byte, 128)
